@@ -15,7 +15,7 @@ Follow these steps to setup and configure "DoomThemAll" on your server:
 2. Download Multiverse: Grab the current release from [here](http://dev.bukkit.org/bukkit-plugins/multiverse-core/) and put it in your plugins-folder.
 3. Upload the maps: Upload the maps you want to play on and name them <code>dta-wX</code>, where "X" has to be a uniqe number. This will be the id of the arena. Example: <code>dta-w1</code>  
 This can be changed in the config-file (see <code>gameWorldPrefix</code>).
-4. Now start your server and import the worlds. Example: <code>/mv import dta-w1 normal</code>  After you did this for every arena, edit the multiverse-world-config and change the following parameters (if you want to):
+4. Now start your server and import the worlds. Example: <code>/mv import dta-w1 normal</code>  After you did this for every arena, edit the Multiverse-world-config and change the following parameters (if you want to):
   * <code>allowweather: false</code>
   * <code>difficulty: PEACEFUL</code>
   * <code>animals:
@@ -65,9 +65,6 @@ If you use a permissions-plugin like PermissionsEx, you'll probably want to rest
 
 **Q**: I don't get any grenades!  
 **A**: You have to kill somebody to get a new grenade.
-
-**Q**: There are so many error-messages in the chat!  
-**A**: Probably you removed a join-sign. Add it again to get rid of these messages.
 
 ## License
 Copyright (C) 2013 [Marvin Menzerath](http://marvin-menzerath.de).
