@@ -5,7 +5,7 @@ DoomThemAll is a Minecraft (Bukkit) Mini-Game: Eliminate the other team using a 
 
 ## How To Play
 After joining a match you see a countdown above your inventory and you are allowed to investigate the map.  
-At the beginning you join the red or the blue team and get a blazerod (Shotgun) and a snowball (Grenade). Both can be used with an right-click. While you can use the shotgun almoste every time, you have to kill somebody from the other team to get a new grenade.  
+At the beginning you join the red or the blue team and get a blaze-rod (Shotgun) and an egg (Grenade). Both can be used with an right-click. While you can use the shotgun almoste every time, you have to kill somebody from the other team to get a new grenade.  
 After one team reached 25 points the game is over.
 
 ## Setup
@@ -15,7 +15,7 @@ Follow these steps to setup and configure "DoomThemAll" on your server:
 2. Download Multiverse: Grab the current release from [here](http://dev.bukkit.org/bukkit-plugins/multiverse-core/) and put it in your plugins-folder.
 3. Upload the maps: Upload the maps you want to play on and name them <code>dta-wX</code>, where "X" has to be a uniqe number. This will be the id of the arena. Example: <code>dta-w1</code>  
 This can be changed in the config-file (see <code>gameWorldPrefix</code>).
-4. Now start your server and import the worlds. Example: <code>/mv import dta-w1 normal</code>  After you did this for every arena, edit the Multiverse-world-config and change the following parameters (if you want to):
+4. Now start your server and import the worlds. Example: <code>/mvimport dta-w1 normal</code>  After you did this for every arena, edit the Multiverse-world-config and change the following parameters (if you want to):
   * <code>allowweather: false</code>
   * <code>difficulty: PEACEFUL</code>
   * <code>animals:
@@ -23,15 +23,15 @@ This can be changed in the config-file (see <code>gameWorldPrefix</code>).
   * <code>monsters:
       spawn: false</code>
   * <code>hunger: false</code>
-5. Reload the Multiverse-Config: <code>/mv reload</code>
+5. Reload the Multiverse-Config: <code>/mvreload</code>
 6. Configure the first arena:
-  1. Teleport there: <code>/mv tp dta-w1</code>
+  1. Teleport there: <code>/mvtp dta-w1</code>
   2. Now set every spawn (exactly 6!): Go to the place you want the players to spawn and type in <code>/dta setspawn [MAP] [SPAWN]</code>. Example: <code>/dta setspawn 1 1</code>
   3. Enable the arena: <code>/dta enable 1</code>.
   4. Set a lobby-spawn: <code>/dta setlobby</code>
   5. Place a sign to join the arena (every new line represents a line of the sign):
     1. <code>DoomThemAll</code>
-    2. <code></code>
+    2. <code>__EMPTY__</code>
     3. <code>dta join [ARENA-ID]</code>
     4. <code>[MAP-NAME]</code>
 
