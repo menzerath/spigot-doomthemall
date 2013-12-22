@@ -547,8 +547,8 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent e) {
-        // No BOOOOM!
-        e.blockList().clear();
+        // No BOOOOM in DTA-worlds!
+        if (e.getLocation().getWorld().getName().startsWith(gameWorldPrefix)) e.blockList().clear();
     }
 
     @EventHandler
