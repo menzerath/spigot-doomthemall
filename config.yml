@@ -1,0 +1,49 @@
+# DoomThemAll config
+
+# Basics
+maxScore: 25
+maxPlayers: 12
+
+# Change this if you know what you're doing!
+gameWorldPrefix: dta-w
+
+# Lobby
+lobbyWorld: world
+lobbySpawn:
+  - 0
+  - 0
+  - 0
+
+# Every single map
+maps:
+  1:
+    enabled: false
+    signWorld: world
+    sign:
+      - 0
+      - 0
+      - 0
+    1:
+      - 0
+      - 0
+      - 0
+    2:
+      - 0
+      - 0
+      - 0
+    3:
+      - 0
+      - 0
+      - 0
+    4:
+      - 0
+      - 0
+      - 0
+    5:
+      - 0
+      - 0
+      - 0
+    6:
+      - 0
+      - 0
+      - 0
