@@ -59,6 +59,9 @@ If you use a permissions-plugin like PermissionsEx, you'll probably want to rest
 * <code>doomthemall.premium</code>: Player is able to join full games and use its Shotgun faster than the other players
 * more will follow soon!
 
+## Compatibility
+Compiled and Tested with (Craft)Bukkit **1.7.2** (Beta-Build).
+
 ## FAQ
 **Q**: I can not kill somebody from my team!  
 **A**: This is the intended behaviour. Nobody wants assholes!
