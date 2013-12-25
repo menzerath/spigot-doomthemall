@@ -44,7 +44,7 @@ public class CommandManager implements CommandExecutor {
             }
 
             // One additional argument
-            if (args.length == 1 && sender instanceof Player) {
+            if (args.length == 1) {
                 // Teleport player to lobby if he/she is not in-game
                 if (args[0].equalsIgnoreCase("lobby")) {
                     Player player = (Player) sender;
