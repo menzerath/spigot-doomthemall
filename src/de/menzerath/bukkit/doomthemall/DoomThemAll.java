@@ -879,19 +879,27 @@ public class DoomThemAll extends JavaPlugin implements Listener {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             public void run() {
                 for (Map.Entry<Integer, Block> b : updateSigns.entrySet()) {
-                    if (b.getValue().getType() == Material.SIGN_POST || b.getValue().getType() == Material.WALL_SIGN) {
-                        Sign mySign = (Sign) b.getValue().getState();
+                    if (isSign(b.getValue())) {
+                        // Load chunk, prevent NullPointerExceptions
+                        b.getValue().getChunk().load();
+
+                        Sign mySign;
+                        try {
+                            mySign = (Sign) b.getValue().getState();
+                        } catch (NullPointerException e) {
+                            Bukkit.getLogger().warning("Signs' chunk not loaded! Will update later...");
+                            continue;
+                        }
 
                         if (!arenaConfig.get(b.getKey())) {
                             mySign.setLine(1, ChatColor.RED + "Disabled");
                             mySign.setLine(2, ChatColor.RED + "0 / " + maxPlayers);
                             mySign.update();
-                            return;
+                        } else {
+                            mySign.setLine(1, getArenaStatus(b.getKey()));
+                            mySign.setLine(2, ChatColor.RED + "" + getPlayerInArena(b.getKey()).size() + " / " + maxPlayers);
+                            mySign.update();
                         }
-
-                        mySign.setLine(1, getArenaStatus(b.getKey()));
-                        mySign.setLine(2, ChatColor.RED + "" + getPlayerInArena(b.getKey()).size() + " / " + maxPlayers);
-                        mySign.update();
                     }
                 }
             }
@@ -905,7 +913,8 @@ public class DoomThemAll extends JavaPlugin implements Listener {
             for (int i = 1; i < 100; i++) {
                 if (event.getLine(2).equalsIgnoreCase("dta join " + i) && event.getPlayer().isOp()) {
                     event.setLine(0, ChatColor.GREEN + "[DoomThemAll]");
-                    event.setLine(2, "Join " + ChatColor.DARK_BLUE + "Arena " + i);
+                    event.setLine(1, "");
+                    event.setLine(2, ChatColor.RED + "0  / " + maxPlayers);
                     event.setLine(3, ChatColor.BLUE + "A" + i + ": " + event.getLine(3));
                     List<Double> listPosition = Arrays.asList(event.getBlock().getLocation().getX(), event.getBlock().getLocation().getY(), event.getBlock().getLocation().getZ());
                     getConfig().set("maps." + i + ".signWorld", event.getPlayer().getWorld().getName());
