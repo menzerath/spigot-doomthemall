@@ -515,8 +515,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 List<String> lsGrenade = new ArrayList<String>();
                 lsGrenade.add(Texts.GAME_HOWTO_GRENADE);
                 lsGrenade.add(Texts.GAME_RELOAD_GRENADE);
-                if (!p.isOp() && funForOPs)
-                    p.getInventory().removeItem(setName(new ItemStack(Material.EGG, 1), "§2Grenade", lsGrenade, 1));
+                p.getInventory().removeItem(setName(new ItemStack(Material.EGG, 1), "§2Grenade", lsGrenade, 1));
 
                 e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CREEPER_HISS, 1, 1);
                 e.setCancelled(true);
