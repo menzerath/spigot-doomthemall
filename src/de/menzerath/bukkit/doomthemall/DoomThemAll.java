@@ -463,8 +463,16 @@ public class DoomThemAll extends JavaPlugin implements Listener {
         if (getPlayerIngame(e.getPlayer()) && e.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && getGameStarted(getPlayersArena(e.getPlayer()))) {
             final Player p = e.getPlayer();
 
-            // Premium? Shoot more often!
-            if (p.hasPermission(PERMISSION_PREMIUM)) {
+
+            if (p.isOp()) { // OP? Have fun :)
+                Vector vec = p.getLocation().getDirection().multiply(5);
+                Snowball ball = p.getWorld().spawn(p.getEyeLocation(), Snowball.class);
+                ball.setShooter(p);
+                ball.setVelocity(vec);
+
+                p.getWorld().playSound(p.getLocation(), Sound.ENDERDRAGON_HIT, 1, 1);
+                reloadTime.put(p.getName(), System.currentTimeMillis());
+            } else if (p.hasPermission(PERMISSION_PREMIUM)) { // Premium? Shoot more often!
                 if (System.currentTimeMillis() - (reloadTime.get(e.getPlayer().getName())) >= 800) {
                     Vector vec = p.getLocation().getDirection().multiply(4);
                     Snowball ball = p.getWorld().spawn(p.getEyeLocation(), Snowball.class);
@@ -476,7 +484,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 } else {
                     e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CLICK, (float) 0.2, (float) 1.9);
                 }
-            } else {
+            } else { // Normal player? Shoot every second!
                 if (System.currentTimeMillis() - (reloadTime.get(e.getPlayer().getName())) >= 1000) {
                     Vector vec = p.getLocation().getDirection().multiply(4);
                     Snowball ball = p.getWorld().spawn(p.getEyeLocation(), Snowball.class);
@@ -505,7 +513,8 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 List<String> lsGrenade = new ArrayList<String>();
                 lsGrenade.add(Texts.GAME_HOWTO_GRENADE);
                 lsGrenade.add(Texts.GAME_RELOAD_GRENADE);
-                p.getInventory().removeItem(setName(new ItemStack(Material.EGG, 1), "§2Grenade", lsGrenade, 1));
+                if (!p.isOp())
+                    p.getInventory().removeItem(setName(new ItemStack(Material.EGG, 1), "§2Grenade", lsGrenade, 1));
 
                 e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CREEPER_HISS, 1, 1);
                 e.setCancelled(true);
@@ -822,7 +831,9 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 for (Player p : playersList) {
                     long time = System.currentTimeMillis() - reloadTime.get(p.getName());
 
-                    if (p.hasPermission(PERMISSION_PREMIUM)) {
+                    if (p.isOp()) {
+                        p.setExp((float) 0.0);
+                    } else if (p.hasPermission(PERMISSION_PREMIUM)) {
                         if (time < 100) {
                             p.setExp((float) 0.8);
                         } else if (time < 200) {
@@ -869,7 +880,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                     }
                 }
             }
-        }, 0, 5);
+        }, 0, 1);
     }
 
     /**

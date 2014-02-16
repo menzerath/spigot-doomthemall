@@ -60,7 +60,7 @@ If you use a permissions-plugin like PermissionsEx, you'll probably want to rest
 * more will follow soon!
 
 ## Compatibility
-Compiled and Tested with (Craft)Bukkit **1.7.2** (Beta-Build).
+Compiled and Tested with (Craft)Bukkit **1.7.4** (Beta-Build).
 
 ## FAQ
 **Q**: I can not kill somebody from my team!  
