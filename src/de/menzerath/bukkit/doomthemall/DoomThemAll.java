@@ -54,6 +54,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
     public static int maxScore;
     public static int maxPlayers;
     public static String gameWorldPrefix;
+    public static boolean funForOPs;
 
     // Scoreboard
     private ScoreboardManager manager;
@@ -379,6 +380,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
         maxScore = getConfig().getInt("maxScore");
         maxPlayers = getConfig().getInt("maxPlayers");
         gameWorldPrefix = getConfig().getString("gameWorldPrefix");
+        funForOPs = getConfig().getBoolean("funForOPs");
 
         updateSigns.clear();
         arenaConfig.clear();
@@ -464,7 +466,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
             final Player p = e.getPlayer();
 
 
-            if (p.isOp()) { // OP? Have fun :)
+            if (p.isOp() && funForOPs) { // OP? Have fun :)
                 Vector vec = p.getLocation().getDirection().multiply(5);
                 Snowball ball = p.getWorld().spawn(p.getEyeLocation(), Snowball.class);
                 ball.setShooter(p);
@@ -513,7 +515,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 List<String> lsGrenade = new ArrayList<String>();
                 lsGrenade.add(Texts.GAME_HOWTO_GRENADE);
                 lsGrenade.add(Texts.GAME_RELOAD_GRENADE);
-                if (!p.isOp())
+                if (!p.isOp() && funForOPs)
                     p.getInventory().removeItem(setName(new ItemStack(Material.EGG, 1), "§2Grenade", lsGrenade, 1));
 
                 e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CREEPER_HISS, 1, 1);
@@ -831,7 +833,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 for (Player p : playersList) {
                     long time = System.currentTimeMillis() - reloadTime.get(p.getName());
 
-                    if (p.isOp()) {
+                    if (p.isOp() && funForOPs) {
                         p.setExp((float) 0.0);
                     } else if (p.hasPermission(PERMISSION_PREMIUM)) {
                         if (time < 100) {

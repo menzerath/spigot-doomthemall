@@ -30,6 +30,7 @@ public class CommandManager implements CommandExecutor {
                     sender.sendMessage("§6     - dta setSpawn [arena] [spawn]");
                     sender.sendMessage("§6     - dta setMaxScore [int > 0]");
                     sender.sendMessage("§6     - dta setMaxPlayers [int > 1]");
+                    sender.sendMessage("§6     - dta funForOPs");
                     sender.sendMessage("§6     - dta reload");
                     sender.sendMessage(Texts.COPYRIGHT);
                 } else {
@@ -106,6 +107,18 @@ public class CommandManager implements CommandExecutor {
                         return true;
                     }
                     plugin.loadConfig();
+                    sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_EXECUTED);
+                    return true;
+                }
+
+                // Enable or Disable fun for OPs
+                if (args[0].equalsIgnoreCase("funForOPs")) {
+                    if (!sender.isOp()) {
+                        sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_OP_ONLY);
+                        return true;
+                    }
+                    DoomThemAll.funForOPs = !DoomThemAll.funForOPs;
+                    plugin.getConfig().set("funForOPs", !DoomThemAll.funForOPs);
                     sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_EXECUTED);
                     return true;
                 }
