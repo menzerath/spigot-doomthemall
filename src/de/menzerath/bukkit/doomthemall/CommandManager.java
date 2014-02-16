@@ -30,7 +30,7 @@ public class CommandManager implements CommandExecutor {
                     sender.sendMessage("§6     - dta setSpawn [arena] [spawn]");
                     sender.sendMessage("§6     - dta setMaxScore [int > 0]");
                     sender.sendMessage("§6     - dta setMaxPlayers [int > 1]");
-                    sender.sendMessage("§6     - dta funForOPs");
+                    sender.sendMessage("§6     - dta funForOPs [true/false]");
                     sender.sendMessage("§6     - dta reload");
                     sender.sendMessage(Texts.COPYRIGHT);
                 } else {
@@ -107,18 +107,6 @@ public class CommandManager implements CommandExecutor {
                         return true;
                     }
                     plugin.loadConfig();
-                    sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_EXECUTED);
-                    return true;
-                }
-
-                // Enable or Disable fun for OPs
-                if (args[0].equalsIgnoreCase("funForOPs")) {
-                    if (!sender.isOp()) {
-                        sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_OP_ONLY);
-                        return true;
-                    }
-                    DoomThemAll.funForOPs = !DoomThemAll.funForOPs;
-                    plugin.getConfig().set("funForOPs", !DoomThemAll.funForOPs);
                     sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_EXECUTED);
                     return true;
                 }
@@ -326,6 +314,26 @@ public class CommandManager implements CommandExecutor {
                     sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_EXECUTED);
                     return true;
                 }
+
+                // Enable or Disable fun for OPs [OP only]
+                if (args[0].equalsIgnoreCase("funForOPs")) {
+                    if (!sender.isOp()) {
+                        sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_OP_ONLY);
+                        return true;
+                    }
+
+                    if (args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("false")) {
+                        boolean active = Boolean.parseBoolean(args[1]);
+                        DoomThemAll.funForOPs = active;
+                        plugin.getConfig().set("funForOPs", active);
+                        plugin.saveConfig();
+                        sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_EXECUTED);
+                    } else {
+                        sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_INVALID_INPUT);
+                    }
+                    return true;
+                }
+
                 return true;
             }
 

@@ -52,7 +52,7 @@ You have to use permissions to allow access to these commands
 * Enable / Disable arena: <code>/dta enable/disable [ARENA]
 * Set maximum score: <code>/dta setMaxScore [SCORE]</code>
 * Set maximum players per arena: <code>/dta setMaxPlayers [PLAYERS]</code>
-* Enable / Disable fun for OPs: <code>/dta funForOPs</code>
+* Enable / Disable fun for OPs: <code>/dta funForOPs [TRUE / FALSE]</code>
 * Reload config: <code>/dta reload</code>
 
 ## Permissions

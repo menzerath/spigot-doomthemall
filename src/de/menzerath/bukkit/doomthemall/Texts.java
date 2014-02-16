@@ -14,6 +14,7 @@ public class Texts {
     public static final String COMMANDS_PLAYER_ONLY = "§4Only Players are allowed to use this command.";
     public static final String COMMANDS_INVALID_ARENA = "§4This is no valid arena.";
     public static final String COMMANDS_INVALID_NUMBER = "§4This is no valid number.";
+    public static final String COMMANDS_INVALID_INPUT = "§4This is no valid input.";
     public static final String COMMANDS_INACTIVE_ARENA = "§4This arena is not setup or active.";
     public static final String COMMANDS_GAME_RUNNING = "§4This game already started. You can not join now.";
     public static final String COMMANDS_INVALID_SPAWNS = "§4These values have to be between 1-100 (maps) and 1-6 (spawns).";
