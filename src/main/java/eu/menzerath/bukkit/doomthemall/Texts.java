@@ -1,4 +1,4 @@
-package de.menzerath.bukkit.doomthemall;
+package eu.menzerath.bukkit.doomthemall;
 
 public class Texts {
     // Begin: Main
