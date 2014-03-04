@@ -792,6 +792,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                             if (getPlayerInArena(i).size() < 2) {
                                 for (Player players : getPlayerInArena(i)) {
                                     players.sendMessage(Texts.PRE_TEXT + Texts.GAME_START_STOPPED);
+                                    players.setLevel(0);
                                 }
                                 countdown.put(i, -1);
                                 return;
@@ -811,6 +812,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                             if (getPlayerInArena(i).size() < 2) {
                                 for (Player players : getPlayerInArena(i)) {
                                     players.sendMessage(Texts.PRE_TEXT + Texts.GAME_START_STOPPED);
+                                    players.setLevel(0);
                                 }
                                 countdown.put(i, -1);
                                 return;
