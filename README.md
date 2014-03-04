@@ -1,7 +1,6 @@
 # DoomThemAll
 DoomThemAll is a Minecraft (Bukkit) Mini-Game: Eliminate the other team using a Shotgun and Grenades!  
-**Herzlich Willkommen, liebe "[Schlag den YouTuber](http://www.youtube.com/watch?v=-twLkPWfVEcT)"-Zuschauer!**  
-[![Build Status](http://menzerath.eu:8080/buildStatus/icon?job=DoomThemAll)](http://menzerath.eu:8080/job/DoomThemAll/)
+**Herzlich Willkommen, liebe "[Schlag den YouTuber](http://www.youtube.com/watch?v=-twLkPWfVEcT)"-Zuschauer!**
 
 ## How To Play
 After joining a match you see a countdown above your inventory and you are allowed to investigate the map.  
