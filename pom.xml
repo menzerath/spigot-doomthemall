@@ -13,6 +13,10 @@
     <description>Minecraft (Bukkit) Mini-Game: Eliminate the other team using a Shotgun and Grenades!</description>
     <url>https://github.com/MarvinMenzerath/DoomThemAll</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <repositories>
         <repository>
             <id>Bukkit</id>
