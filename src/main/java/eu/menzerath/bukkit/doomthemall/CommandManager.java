@@ -35,7 +35,6 @@ public class CommandManager implements CommandExecutor {
                     sender.sendMessage("§6     - dta setMaxPlayers [int > 1]");
                     sender.sendMessage("§6     - dta funForOPs [true/false]");
                     sender.sendMessage("§6     - dta reload");
-                    sender.sendMessage(Texts.COPYRIGHT);
                 }
                 sender.sendMessage(Texts.COPYRIGHT);
                 return true;
