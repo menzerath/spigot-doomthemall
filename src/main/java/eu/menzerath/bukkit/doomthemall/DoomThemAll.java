@@ -981,38 +981,27 @@ public class DoomThemAll extends JavaPlugin implements Listener {
         if (playerOnKillstreak.get(getPlayersArena(p)).equals(p.getDisplayName())) {
             numberOfKillstreak.put(getPlayersArena(p), numberOfKillstreak.get(getPlayersArena(p)) + 1);
 
-            if (numberOfKillstreak.get(getPlayersArena(p)) == 2) {
-                if (playerInTeamRed(p)) {
-                    message = Texts.PRE_TEXT + "§c" + p.getDisplayName() + "§7: §6Double Kill!";
-                }
-                if (playerInTeamBlue(p)) {
-                    message = Texts.PRE_TEXT + "§9" + p.getDisplayName() + "§7: §6Double Kill!";
-                }
-                for (Player player : getPlayerInArena(getPlayersArena(p))) {
-                    player.sendMessage(message);
-                }
+            if (playerInTeamRed(p)) {
+                message = Texts.PRE_TEXT + "§c" + p.getDisplayName();
+            } else {
+                message = Texts.PRE_TEXT + "§9" + p.getDisplayName();
             }
-            if (numberOfKillstreak.get(getPlayersArena(p)) == 3) {
-                if (playerInTeamRed(p)) {
-                    message = Texts.PRE_TEXT + "§c" + p.getDisplayName() + "§7: §6Triple Kill!";
-                }
-                if (playerInTeamBlue(p)) {
-                    message = Texts.PRE_TEXT + "§9" + p.getDisplayName() + "§7: §6Triple Kill!";
-                }
-                for (Player player : getPlayerInArena(getPlayersArena(p))) {
-                    player.sendMessage(message);
-                }
+
+            int kills = numberOfKillstreak.get(getPlayersArena(p));
+            if (kills == 2) {
+                message += "§7: §6Double Kill!";
+            } else if (kills == 3) {
+                message += "§7: §6Triple Kill!";
+            } else if (kills == 4) {
+                message += "§7: §6QUADRA KILL!";
+            } else if (kills == 5) {
+                message += "§7: §6PENTA KILL!!!";
+            } else if (kills > 5) {
+                message += "§7: §6CALL HIM \"THE SLAUGHTERER\"! (" + kills + " Kills)!";
             }
-            if (numberOfKillstreak.get(getPlayersArena(p)) > 3) {
-                if (playerInTeamRed(p)) {
-                    message = Texts.PRE_TEXT + "§c" + p.getDisplayName() + "§7: §6Stop him (" + numberOfKillstreak.get(getPlayersArena(p)) + " Kills)!";
-                }
-                if (playerInTeamBlue(p)) {
-                    message = Texts.PRE_TEXT + "§9" + p.getDisplayName() + "§7: §6Stop him (" + numberOfKillstreak.get(getPlayersArena(p)) + " Kills)!";
-                }
-                for (Player player : getPlayerInArena(getPlayersArena(p))) {
-                    player.sendMessage(message);
-                }
+
+            for (Player player : getPlayerInArena(getPlayersArena(p))) {
+                player.sendMessage(message);
             }
         } else {
             playerOnKillstreak.put(getPlayersArena(p), p.getDisplayName());
@@ -1087,7 +1076,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
      */
     private Location randomSpawn(int mapId) {
         Random r = new Random();
-        int random = r.nextInt(6) + 1;
+        int random = r.nextInt(8) + 1;
         List<Double> spawns = this.getConfig().getDoubleList("maps." + mapId + "." + random);
         return new Location(getServer().getWorld(gameWorldPrefix + mapId), spawns.get(0), spawns.get(1), spawns.get(2));
     }

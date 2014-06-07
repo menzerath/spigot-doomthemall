@@ -21,9 +21,12 @@ public class CommandManager implements CommandExecutor {
             // No further arguments
             if (args.length == 0) {
                 // Send list of available commands for OPs and normal Players
+                sender.sendMessage(Texts.COMMANDS_HEAD);
+                sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_COMMANDS);
+                sender.sendMessage("§6     - dta join [arena]");
+                sender.sendMessage("§6     - dta leave");
+                sender.sendMessage("§6     - dta start");
                 if (sender.isOp()) {
-                    sender.sendMessage(Texts.COMMANDS_HEAD);
-                    sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_COMMANDS);
                     sender.sendMessage("§6     - dta [start/stop] [arena]");
                     sender.sendMessage("§6     - dta [enable/disable] [arena]");
                     sender.sendMessage("§6     - dta setLobby");
@@ -33,14 +36,8 @@ public class CommandManager implements CommandExecutor {
                     sender.sendMessage("§6     - dta funForOPs [true/false]");
                     sender.sendMessage("§6     - dta reload");
                     sender.sendMessage(Texts.COPYRIGHT);
-                } else {
-                    sender.sendMessage(Texts.COMMANDS_HEAD);
-                    sender.sendMessage(Texts.PRE_TEXT + Texts.COMMANDS_COMMANDS);
-                    sender.sendMessage("§6     - dta join [arena]");
-                    sender.sendMessage("§6     - dta leave");
-                    sender.sendMessage("§6     - dta start | PREMIUM ONLY!");
-                    sender.sendMessage(Texts.COPYRIGHT);
                 }
+                sender.sendMessage(Texts.COPYRIGHT);
                 return true;
             }
 
@@ -351,8 +348,8 @@ public class CommandManager implements CommandExecutor {
                         return true;
                     }
 
-                    int arg1;
-                    int arg2;
+                    int arg1; // Arena
+                    int arg2; // Spawn
                     try {
                         arg1 = Integer.parseInt(args[1]);
                         arg2 = Integer.parseInt(args[2]);
@@ -361,7 +358,7 @@ public class CommandManager implements CommandExecutor {
                         return true;
                     }
 
-                    if (arg1 < 100 && arg1 > 0 && arg2 < 7 && arg2 > 0) {
+                    if (arg1 < 100 && arg1 > 0 && arg2 < 9 && arg2 > 0) {
                         Player player = (Player) sender;
                         List<Double> listPosition = Arrays.asList(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
                         plugin.getConfig().set("maps." + arg1 + "." + arg2, listPosition);
