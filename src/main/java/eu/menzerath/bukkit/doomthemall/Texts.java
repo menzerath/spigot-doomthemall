@@ -55,6 +55,6 @@ public class Texts {
     // End: DoomThemAll
 
     // Begin: Other
-    public static final String COPYRIGHT = "(c) 2013-2014: Marvin Menzerath - http://menzerath.eu";
+    public static final String COPYRIGHT = "(c) 2013-2015: Marvin Menzerath - https://menzerath.eu";
     // End: Other
 }

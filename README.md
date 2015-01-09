@@ -1,5 +1,5 @@
 # DoomThemAll
-DoomThemAll is a Minecraft (Bukkit) Mini-Game: Eliminate the other team using a Shotgun and Grenades!  
+DoomThemAll is a Minecraft (Bukkit/Spigot) Mini-Game: Eliminate the other team using a Shotgun and Grenades!
 
 ## How To Play
 After joining a match you see a countdown above your inventory and you are allowed to investigate the map.  
@@ -59,7 +59,7 @@ If you use a permissions-plugin like PermissionsEx, you'll probably want to rest
 * more will follow soon!
 
 ## Compatibility
-Compiled and Tested with (Craft)Bukkit **1.7.9** (Beta-Build).
+Compiled and Tested with (Craft)Bukkit / Spigot **1.8** (Beta-Build).
 
 ## FAQ
 **Q**: I can not kill somebody from my team!  
