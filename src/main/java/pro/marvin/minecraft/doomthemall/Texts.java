@@ -1,4 +1,4 @@
-package eu.menzerath.bukkit.doomthemall;
+package pro.marvin.minecraft.doomthemall;
 
 public class Texts {
     // Begin: Main

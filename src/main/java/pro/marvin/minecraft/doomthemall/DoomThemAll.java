@@ -1,4 +1,4 @@
-package eu.menzerath.bukkit.doomthemall;
+package pro.marvin.minecraft.doomthemall;
 
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;

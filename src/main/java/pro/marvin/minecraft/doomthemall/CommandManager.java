@@ -1,4 +1,4 @@
-package eu.menzerath.bukkit.doomthemall;
+package pro.marvin.minecraft.doomthemall;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
