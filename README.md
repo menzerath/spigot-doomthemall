@@ -10,7 +10,7 @@ After one team reached 25 points the game is over.
 Follow these steps to setup and configure "DoomThemAll" on your server:
 
 1. Download the plugin: Grab the current release from [here](https://github.com/MarvinMenzerath/DoomThemAll/releases) and put it in your plugins-folder.
-2. Download Multiverse: Grab the current release from [here](http://dev.bukkit.org/bukkit-plugins/multiverse-core/) and put it in your plugins-folder.
+2. Download Multiverse: Grab the current release from [here](https://dev.bukkit.org/projects/multiverse-core) and put it in your plugins-folder.
 3. Upload the maps: Upload the maps you want to play on and name them `dta-wX`, where "X" has to be a unique number. This will be the id of the arena. Example: `dta-w1`
 This can be changed in the config-file (see `gameWorldPrefix`).
 4. Now start your server and import the worlds. Example: `/mvimport dta-w1 normal`  After you did this for every arena, edit the Multiverse-world-config and change the following parameters (if you want to):
@@ -56,14 +56,3 @@ You have to use permissions to allow access to these commands
 ## Permissions
 If you use a permissions-plugin like PermissionsEx, you'll probably want to restrict access to certain features of DoomThemAll:
 * `doomthemall.premium`: Player is able to join full games and use its Shotgun faster than the other players
-* more will follow soon!
-
-## Compatibility
-Compiled and Tested with (Craft)Bukkit / Spigot **1.8** (Beta-Build).
-
-## FAQ
-**Q**: I can not kill somebody from my team!  
-**A**: This is the intended behaviour. Nobody wants assholes!
-
-**Q**: I don't get any grenades!  
-**A**: You have to kill somebody to get a new grenade.
