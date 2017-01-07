@@ -296,7 +296,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
      */
     public void playerJoinedArena(final Player p, final int mapId) {
         if (playersList.contains(p)) {
-            // Player already ingame
+            // Player already in game
             p.sendMessage(Texts.PRE_TEXT + Texts.GAME_ALREADY_INGAME);
             return;
         }
@@ -462,7 +462,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         // Player uses the blaze-rod (shotgun)
-        if (getPlayerIngame(e.getPlayer()) && e.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && getGameStarted(getPlayersArena(e.getPlayer()))) {
+        if (getPlayerInGame(e.getPlayer()) && e.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && getGameStarted(getPlayersArena(e.getPlayer()))) {
             final Player p = e.getPlayer();
 
 
@@ -502,7 +502,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
         }
 
         // Its an egg! Throw the grenade
-        if (getPlayerIngame(e.getPlayer()) && e.getPlayer().getItemInHand().getType() == Material.EGG && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && getGameStarted(getPlayersArena(e.getPlayer()))) {
+        if (getPlayerInGame(e.getPlayer()) && e.getPlayer().getItemInHand().getType() == Material.EGG && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && getGameStarted(getPlayersArena(e.getPlayer()))) {
             if (e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals("§2Grenade")) {
                 Player p = e.getPlayer();
                 Vector vec = p.getLocation().getDirection().multiply(2.8);
@@ -523,7 +523,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
         }
 
         // Do not allow anything else
-        if (getPlayerIngame(e.getPlayer())) {
+        if (getPlayerInGame(e.getPlayer())) {
             e.setCancelled(true);
             return;
         }
@@ -540,7 +540,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 
                 // Teleport player to the lobby
                 if (theSign.getLine(2).equals(ChatColor.DARK_GREEN + "--> Lobby <--")) {
-                    if (getPlayerIngame(e.getPlayer())) {
+                    if (getPlayerInGame(e.getPlayer())) {
                         playersList.remove(e.getPlayer());
                         playersTeam.remove(e.getPlayer().getName());
                         playersMap.remove(e.getPlayer().getName());
@@ -565,7 +565,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             // No fall-damage, suicide or drowning while in-game!
-            if ((e.getCause().equals(DamageCause.FALL) || e.getCause().equals(DamageCause.SUICIDE) || e.getCause().equals(DamageCause.DROWNING)) && getPlayerIngame((Player) e.getEntity())) {
+            if ((e.getCause().equals(DamageCause.FALL) || e.getCause().equals(DamageCause.SUICIDE) || e.getCause().equals(DamageCause.DROWNING)) && getPlayerInGame((Player) e.getEntity())) {
                 e.setCancelled(true);
             }
         }
@@ -574,12 +574,12 @@ public class DoomThemAll extends JavaPlugin implements Listener {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent e) {
         // Player has spawn-protection
-        if (e.getEntity() instanceof Player && ((Player) e.getEntity()).hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getPlayerIngame((Player) e.getEntity())) {
+        if (e.getEntity() instanceof Player && ((Player) e.getEntity()).hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getPlayerInGame((Player) e.getEntity())) {
             e.setCancelled(true);
             return;
         }
 
-        if (e.getDamager() instanceof Snowball && e.getEntity() instanceof Player && getPlayerIngame((Player) e.getEntity())) {
+        if (e.getDamager() instanceof Snowball && e.getEntity() instanceof Player && getPlayerInGame((Player) e.getEntity())) {
             // A player shot you.
             final Player shooter = (Player) ((Snowball) e.getDamager()).getShooter();
             final Player target = (Player) e.getEntity();
@@ -594,7 +594,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 
                 getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                     public void run() {
-                        if (getPlayerIngame(shooter)) {
+                        if (getPlayerInGame(shooter)) {
                             givePlayerAmmo(shooter);
                         }
                     }
@@ -607,7 +607,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                     }
                 }, 20L);
             }
-        } else if (e.getDamager() instanceof TNTPrimed && e.getEntity() instanceof Player && getPlayerIngame((Player) e.getEntity())) {
+        } else if (e.getDamager() instanceof TNTPrimed && e.getEntity() instanceof Player && getPlayerInGame((Player) e.getEntity())) {
             // Boom! You were hit by a grenade!
             TNTPrimed tnt = (TNTPrimed) e.getDamager();
             final Player shooter = getServer().getPlayer(tnt.getMetadata("shooter").get(0).asString());
@@ -623,7 +623,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 
                 getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                     public void run() {
-                        if (getPlayerIngame(shooter)) {
+                        if (getPlayerInGame(shooter)) {
                             givePlayerAmmo(shooter);
                         }
                     }
@@ -636,7 +636,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                     }
                 }, 20L);
             }
-        } else if (e.getDamager() instanceof Player && e.getEntity() instanceof Player && getPlayerIngame((Player) e.getEntity())) {
+        } else if (e.getDamager() instanceof Player && e.getEntity() instanceof Player && getPlayerInGame((Player) e.getEntity())) {
             // Stay clean!
             e.setCancelled(true);
         }
@@ -771,13 +771,13 @@ public class DoomThemAll extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         // No block-breaking in-game!
-        if (getPlayerIngame(e.getPlayer())) e.setCancelled(true);
+        if (getPlayerInGame(e.getPlayer())) e.setCancelled(true);
     }
 
     @EventHandler
     public void playerDropItem(PlayerDropItemEvent e) {
         // Why would you want to drop your weapons?!
-        if (getPlayerIngame(e.getPlayer()) && getGameStarted(getPlayersArena(e.getPlayer()))) e.setCancelled(true);
+        if (getPlayerInGame(e.getPlayer()) && getGameStarted(getPlayersArena(e.getPlayer()))) e.setCancelled(true);
     }
 
     /**
@@ -1136,7 +1136,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
      * @param p Which player will be checked
      * @return If the player is currently in-game
      */
-    public boolean getPlayerIngame(Player p) {
+    public boolean getPlayerInGame(Player p) {
         return playersList.contains(p);
     }
 
