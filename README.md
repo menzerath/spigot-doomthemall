@@ -67,10 +67,3 @@ Compiled and Tested with (Craft)Bukkit / Spigot **1.8** (Beta-Build).
 
 **Q**: I don't get any grenades!  
 **A**: You have to kill somebody to get a new grenade.
-
-## License
-Copyright (C) 2013-2015 [Marvin Menzerath](https://menzerath.eu)
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the [GNU General Public License](https://github.com/MarvinMenzerath/DoomThemAll/blob/master/LICENSE) for more details.
