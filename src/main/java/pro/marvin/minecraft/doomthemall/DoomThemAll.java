@@ -31,24 +31,24 @@ import java.util.*;
 
 public class DoomThemAll extends JavaPlugin implements Listener {
 	// Game-stats ...
-	public HashMap<Integer, Boolean> arenaConfig = new HashMap<Integer, Boolean>();
-	private HashMap<Integer, Block> updateSigns = new HashMap<Integer, Block>();
+	public HashMap<Integer, Boolean> arenaConfig = new HashMap<>();
+	private HashMap<Integer, Block> updateSigns = new HashMap<>();
 
-	private HashMap<Integer, Boolean> gameStarted = new HashMap<Integer, Boolean>();
-	private HashMap<Integer, Integer> countdown = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Boolean> gameStarted = new HashMap<>();
+	private HashMap<Integer, Integer> countdown = new HashMap<>();
 
-	public List<Player> playersList = new ArrayList<Player>();
-	public HashMap<String, Integer> playersMap = new HashMap<String, Integer>();
-	public HashMap<String, String> playersTeam = new HashMap<String, String>();
+	public List<Player> playersList = new ArrayList<>();
+	public HashMap<String, Integer> playersMap = new HashMap<>();
+	public HashMap<String, String> playersTeam = new HashMap<>();
 
-	private HashMap<String, Long> reloadTime = new HashMap<String, Long>();
-	private HashMap<String, Boolean> canDie = new HashMap<String, Boolean>();
+	private HashMap<String, Long> reloadTime = new HashMap<>();
+	private HashMap<String, Boolean> canDie = new HashMap<>();
 
-	private HashMap<Integer, Integer> blueScore = new HashMap<Integer, Integer>();
-	private HashMap<Integer, Integer> redScore = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Integer> blueScore = new HashMap<>();
+	private HashMap<Integer, Integer> redScore = new HashMap<>();
 
-	private HashMap<Integer, String> playerOnKillstreak = new HashMap<Integer, String>();
-	private HashMap<Integer, Integer> numberOfKillstreak = new HashMap<Integer, Integer>();
+	private HashMap<Integer, String> playerOnKillstreak = new HashMap<>();
+	private HashMap<Integer, Integer> numberOfKillstreak = new HashMap<>();
 
 	// Config-file
 	public static int maxScore;
@@ -252,39 +252,35 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 			fw.setFireworkMeta(fwm);
 
 			// Clear the inventory (delayed, because a player might get a grenade right when the game ends)
-			getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-				public void run() {
-					for (Player p : getPlayerInArena(mapId)) {
-						p.getInventory().clear();
-					}
+			getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+				for (Player p1 : getPlayerInArena(mapId)) {
+					p1.getInventory().clear();
 				}
 			}, 2);
 		}
 
 		// Send the players back to the lobby
-		getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			public void run() {
-				for (Player p : getPlayerInArena(mapId)) {
-					p.setGameMode(GameMode.ADVENTURE);
-					p.getInventory().clear();
-					p.getInventory().setHelmet(new ItemStack(Material.AIR));
-					p.setExp(0);
-					p.setLevel(0);
-					p.teleport(dtaSpawn());
-					p.removePotionEffect(PotionEffectType.SPEED);
-					p.removePotionEffect(PotionEffectType.JUMP);
-					p.removePotionEffect(PotionEffectType.CONFUSION);
+		getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+			for (Player p : getPlayerInArena(mapId)) {
+				p.setGameMode(GameMode.ADVENTURE);
+				p.getInventory().clear();
+				p.getInventory().setHelmet(new ItemStack(Material.AIR));
+				p.setExp(0);
+				p.setLevel(0);
+				p.teleport(dtaSpawn());
+				p.removePotionEffect(PotionEffectType.SPEED);
+				p.removePotionEffect(PotionEffectType.JUMP);
+				p.removePotionEffect(PotionEffectType.CONFUSION);
 
-					p.setScoreboard(manager.getNewScoreboard());
-					playersList.remove(p);
-					playersTeam.remove(p.getName());
-					playersMap.remove(p.getName());
-					reloadTime.remove(p.getName());
-					canDie.remove(p.getName());
-				}
-				objective[mapId].unregister();
-				gameStarted.put(mapId, false);
+				p.setScoreboard(manager.getNewScoreboard());
+				playersList.remove(p);
+				playersTeam.remove(p.getName());
+				playersMap.remove(p.getName());
+				reloadTime.remove(p.getName());
+				canDie.remove(p.getName());
 			}
+			objective[mapId].unregister();
+			gameStarted.put(mapId, false);
 		}, 10 * 20L);
 	}
 
@@ -402,47 +398,45 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 	 * @param respawn If the player was already in-game before or not
 	 */
 	private void preparePlayers(final Player p, final boolean respawn) {
-		getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			public void run() {
-				p.teleport(randomSpawn(getPlayersArena(p)));
-				p.getInventory().clear();
-				p.getInventory().setHeldItemSlot(0);
+		getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+			p.teleport(randomSpawn(getPlayersArena(p)));
+			p.getInventory().clear();
+			p.getInventory().setHeldItemSlot(0);
 
-				if (!getGameStarted(getPlayersArena(p))) {
-					return;
-				}
+			if (!getGameStarted(getPlayersArena(p))) {
+				return;
+			}
 
-				if (blueScore.get(getPlayersArena(p)) == maxScore || redScore.get(getPlayersArena(p)) == maxScore) {
-					return;
-				}
+			if (blueScore.get(getPlayersArena(p)) == maxScore || redScore.get(getPlayersArena(p)) == maxScore) {
+				return;
+			}
 
-				// Give player the shotgun and a grenade (if first spawn)
-				List<String> lsShotgun = new ArrayList<String>();
-				lsShotgun.add(Texts.GAME_HOWTO_SHOTGUN);
-				if (p.hasPermission(PERMISSION_PREMIUM)) {
-					lsShotgun.add(Texts.GAME_RELOAD_SHOTGUN + "0.8s");
-				} else {
-					lsShotgun.add(Texts.GAME_RELOAD_SHOTGUN + "1s");
-				}
-				p.getInventory().addItem(setName(new ItemStack(Material.BLAZE_ROD, 1), "§2Shotgun", lsShotgun, 1));
-				if (!respawn) {
-					givePlayerAmmo(p);
-				}
-				p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999, 0));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 2));
-				p.getInventory().setHeldItemSlot(0);
+			// Give player the shotgun and a grenade (if first spawn)
+			List<String> lsShotgun = new ArrayList<String>();
+			lsShotgun.add(Texts.GAME_HOWTO_SHOTGUN);
+			if (p.hasPermission(PERMISSION_PREMIUM)) {
+				lsShotgun.add(Texts.GAME_RELOAD_SHOTGUN + "0.8s");
+			} else {
+				lsShotgun.add(Texts.GAME_RELOAD_SHOTGUN + "1s");
+			}
+			p.getInventory().addItem(setName(new ItemStack(Material.BLAZE_ROD, 1), "§2Shotgun", lsShotgun, 1));
+			if (!respawn) {
+				givePlayerAmmo(p);
+			}
+			p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999, 0));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 2));
+			p.getInventory().setHeldItemSlot(0);
 
-				// Give the player a funky wool-helmet
-				if (playerInTeamRed(p)) {
-					p.getInventory().setHelmet(new ItemStack(Material.WOOL, 1, (byte) 14));
-				} else if (playerInTeamBlue(p)) {
-					p.getInventory().setHelmet(new ItemStack(Material.WOOL, 1, (byte) 11));
-				}
+			// Give the player a funky wool-helmet
+			if (playerInTeamRed(p)) {
+				p.getInventory().setHelmet(new ItemStack(Material.WOOL, 1, (byte) 14));
+			} else if (playerInTeamBlue(p)) {
+				p.getInventory().setHelmet(new ItemStack(Material.WOOL, 1, (byte) 11));
+			}
 
-				// Spawn-protection
-				if (respawn) {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 10));
-				}
+			// Spawn-protection
+			if (respawn) {
+				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 10));
 			}
 		});
 	}
@@ -592,20 +586,14 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 				preparePlayers(target, true);
 				target.playSound(target.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 5, 1);
 
-				getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-					public void run() {
-						if (getPlayerInGame(shooter)) {
-							givePlayerAmmo(shooter);
-						}
+				getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+					if (getPlayerInGame(shooter)) {
+						givePlayerAmmo(shooter);
 					}
 				});
 
 				// Do not kill player too often
-				getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-					public void run() {
-						canDie.put(target.getName(), true);
-					}
-				}, 20L);
+				getServer().getScheduler().scheduleSyncDelayedTask(this, () -> canDie.put(target.getName(), true), 20L);
 			}
 		} else if (e.getDamager() instanceof TNTPrimed && e.getEntity() instanceof Player && getPlayerInGame((Player) e.getEntity())) {
 			// Boom! You were hit by a grenade!
@@ -621,20 +609,14 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 				preparePlayers(target, true);
 				target.playSound(target.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 5, 1);
 
-				getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-					public void run() {
-						if (getPlayerInGame(shooter)) {
-							givePlayerAmmo(shooter);
-						}
+				getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+					if (getPlayerInGame(shooter)) {
+						givePlayerAmmo(shooter);
 					}
 				});
 
 				// Do not kill player too often
-				getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-					public void run() {
-						canDie.put(target.getName(), true);
-					}
-				}, 20L);
+				getServer().getScheduler().scheduleSyncDelayedTask(this, () -> canDie.put(target.getName(), true), 20L);
 			}
 		} else if (e.getDamager() instanceof Player && e.getEntity() instanceof Player && getPlayerInGame((Player) e.getEntity())) {
 			// Stay clean!
@@ -784,41 +766,39 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 	 * Manages the countdowns in every arena
 	 */
 	private void countdown() {
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				for (int i = 1; i < 100; i++) {
-					if (countdown.get(i) != -1) {
-						if (countdown.get(i) != 0) {
-							if (getPlayerInArena(i).size() < 2) {
-								for (Player players : getPlayerInArena(i)) {
-									players.sendMessage(Texts.PRE_TEXT + Texts.GAME_START_STOPPED);
-									players.setLevel(0);
-								}
-								countdown.put(i, -1);
-								return;
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+			for (int i = 1; i < 100; i++) {
+				if (countdown.get(i) != -1) {
+					if (countdown.get(i) != 0) {
+						if (getPlayerInArena(i).size() < 2) {
+							for (Player players : getPlayerInArena(i)) {
+								players.sendMessage(Texts.PRE_TEXT + Texts.GAME_START_STOPPED);
+								players.setLevel(0);
 							}
-
-							if (countdown.get(i) < 6) {
-								for (Player p : getPlayerInArena(i)) {
-									p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 3, 1);
-								}
-							}
-							for (Player p : getPlayerInArena(i)) {
-								p.setLevel(countdown.get(i));
-							}
-							countdown.put(i, countdown.get(i) - 1);
-						} else {
-							countdown.put(i, countdown.get(i) - 1);
-							if (getPlayerInArena(i).size() < 2) {
-								for (Player players : getPlayerInArena(i)) {
-									players.sendMessage(Texts.PRE_TEXT + Texts.GAME_START_STOPPED);
-									players.setLevel(0);
-								}
-								countdown.put(i, -1);
-								return;
-							}
-							startGame(i, true);
+							countdown.put(i, -1);
+							return;
 						}
+
+						if (countdown.get(i) < 6) {
+							for (Player p : getPlayerInArena(i)) {
+								p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 3, 1);
+							}
+						}
+						for (Player p : getPlayerInArena(i)) {
+							p.setLevel(countdown.get(i));
+						}
+						countdown.put(i, countdown.get(i) - 1);
+					} else {
+						countdown.put(i, countdown.get(i) - 1);
+						if (getPlayerInArena(i).size() < 2) {
+							for (Player players : getPlayerInArena(i)) {
+								players.sendMessage(Texts.PRE_TEXT + Texts.GAME_START_STOPPED);
+								players.setLevel(0);
+							}
+							countdown.put(i, -1);
+							return;
+						}
+						startGame(i, true);
 					}
 				}
 			}
@@ -829,57 +809,55 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 	 * Shows the time until player is able to shoot again in the exp-bar
 	 */
 	private void reloadTime() {
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				for (Player p : playersList) {
-					long time = System.currentTimeMillis() - reloadTime.get(p.getName());
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+			for (Player p : playersList) {
+				long time = System.currentTimeMillis() - reloadTime.get(p.getName());
 
-					if (p.isOp() && funForOPs) {
-						p.setExp((float) 0.0);
-					} else if (p.hasPermission(PERMISSION_PREMIUM)) {
-						if (time < 100) {
-							p.setExp((float) 0.8);
-						} else if (time < 200) {
-							p.setExp((float) 0.7);
-						} else if (time < 300) {
-							p.setExp((float) 0.6);
-						} else if (time < 400) {
-							p.setExp((float) 0.5);
-						} else if (time < 500) {
-							p.setExp((float) 0.4);
-						} else if (time < 600) {
-							p.setExp((float) 0.3);
-						} else if (time < 700) {
-							p.setExp((float) 0.2);
-						} else if (time < 800) {
-							p.setExp((float) 0.1);
-						} else {
-							p.setExp((float) 0.0);
-						}
+				if (p.isOp() && funForOPs) {
+					p.setExp((float) 0.0);
+				} else if (p.hasPermission(PERMISSION_PREMIUM)) {
+					if (time < 100) {
+						p.setExp((float) 0.8);
+					} else if (time < 200) {
+						p.setExp((float) 0.7);
+					} else if (time < 300) {
+						p.setExp((float) 0.6);
+					} else if (time < 400) {
+						p.setExp((float) 0.5);
+					} else if (time < 500) {
+						p.setExp((float) 0.4);
+					} else if (time < 600) {
+						p.setExp((float) 0.3);
+					} else if (time < 700) {
+						p.setExp((float) 0.2);
+					} else if (time < 800) {
+						p.setExp((float) 0.1);
 					} else {
-						if (time < 100) {
-							p.setExp((float) 0.9);
-						} else if (time < 200) {
-							p.setExp((float) 0.9);
-						} else if (time < 300) {
-							p.setExp((float) 0.8);
-						} else if (time < 400) {
-							p.setExp((float) 0.7);
-						} else if (time < 500) {
-							p.setExp((float) 0.6);
-						} else if (time < 600) {
-							p.setExp((float) 0.5);
-						} else if (time < 700) {
-							p.setExp((float) 0.4);
-						} else if (time < 800) {
-							p.setExp((float) 0.3);
-						} else if (time < 900) {
-							p.setExp((float) 0.2);
-						} else if (time < 1000) {
-							p.setExp((float) 0.1);
-						} else {
-							p.setExp((float) 0.0);
-						}
+						p.setExp((float) 0.0);
+					}
+				} else {
+					if (time < 100) {
+						p.setExp((float) 0.9);
+					} else if (time < 200) {
+						p.setExp((float) 0.9);
+					} else if (time < 300) {
+						p.setExp((float) 0.8);
+					} else if (time < 400) {
+						p.setExp((float) 0.7);
+					} else if (time < 500) {
+						p.setExp((float) 0.6);
+					} else if (time < 600) {
+						p.setExp((float) 0.5);
+					} else if (time < 700) {
+						p.setExp((float) 0.4);
+					} else if (time < 800) {
+						p.setExp((float) 0.3);
+					} else if (time < 900) {
+						p.setExp((float) 0.2);
+					} else if (time < 1000) {
+						p.setExp((float) 0.1);
+					} else {
+						p.setExp((float) 0.0);
 					}
 				}
 			}
@@ -890,30 +868,28 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 	 * Updates the signs every half second and shows game-status and player-count
 	 */
 	private void updateSigns() {
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				for (Map.Entry<Integer, Block> b : updateSigns.entrySet()) {
-					if (isSign(b.getValue())) {
-						// Load chunk, prevent NullPointerExceptions
-						b.getValue().getChunk().load();
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+			for (Map.Entry<Integer, Block> b : updateSigns.entrySet()) {
+				if (isSign(b.getValue())) {
+					// Load chunk, prevent NullPointerExceptions
+					b.getValue().getChunk().load();
 
-						Sign mySign;
-						try {
-							mySign = (Sign) b.getValue().getState();
-						} catch (NullPointerException e) {
-							Bukkit.getLogger().warning("Signs' chunk not loaded! Will update later...");
-							continue;
-						}
+					Sign mySign;
+					try {
+						mySign = (Sign) b.getValue().getState();
+					} catch (NullPointerException e) {
+						Bukkit.getLogger().warning("Signs' chunk not loaded! Will update later...");
+						continue;
+					}
 
-						if (!arenaConfig.get(b.getKey())) {
-							mySign.setLine(1, ChatColor.RED + "Disabled");
-							mySign.setLine(2, ChatColor.RED + "0 / " + maxPlayers);
-							mySign.update();
-						} else {
-							mySign.setLine(1, getArenaStatus(b.getKey()));
-							mySign.setLine(2, ChatColor.RED + "" + getPlayerInArena(b.getKey()).size() + " / " + maxPlayers);
-							mySign.update();
-						}
+					if (!arenaConfig.get(b.getKey())) {
+						mySign.setLine(1, ChatColor.RED + "Disabled");
+						mySign.setLine(2, ChatColor.RED + "0 / " + maxPlayers);
+						mySign.update();
+					} else {
+						mySign.setLine(1, getArenaStatus(b.getKey()));
+						mySign.setLine(2, ChatColor.RED + "" + getPlayerInArena(b.getKey()).size() + " / " + maxPlayers);
+						mySign.update();
 					}
 				}
 			}
