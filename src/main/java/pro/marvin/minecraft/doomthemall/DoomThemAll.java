@@ -150,7 +150,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 
         // Sound
         for (Player p : getPlayerInArena(mapId)) {
-            p.playSound(p.getLocation(), Sound.ORB_PICKUP, 3, 1);
+            p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 3, 1);
         }
 
         // Balance teams
@@ -472,7 +472,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 ball.setShooter(p);
                 ball.setVelocity(vec);
 
-                p.getWorld().playSound(p.getLocation(), Sound.ENDERDRAGON_HIT, 1, 1);
+                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_HURT, 1, 1);
                 reloadTime.put(p.getName(), System.currentTimeMillis());
             } else if (p.hasPermission(PERMISSION_PREMIUM)) { // Premium? Shoot more often!
                 if (System.currentTimeMillis() - (reloadTime.get(e.getPlayer().getName())) >= 800) {
@@ -481,10 +481,10 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                     ball.setShooter(p);
                     ball.setVelocity(vec);
 
-                    p.getWorld().playSound(p.getLocation(), Sound.ENDERDRAGON_HIT, 1, 1);
+                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_HURT, 1, 1);
                     reloadTime.put(p.getName(), System.currentTimeMillis());
                 } else {
-                    e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CLICK, (float) 0.2, (float) 1.9);
+                    e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.UI_BUTTON_CLICK, (float) 0.2, (float) 1.9);
                 }
             } else { // Normal player? Shoot every second!
                 if (System.currentTimeMillis() - (reloadTime.get(e.getPlayer().getName())) >= 1000) {
@@ -493,10 +493,10 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                     ball.setShooter(p);
                     ball.setVelocity(vec);
 
-                    p.getWorld().playSound(p.getLocation(), Sound.ENDERDRAGON_HIT, 1, 1);
+                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_HURT, 1, 1);
                     reloadTime.put(p.getName(), System.currentTimeMillis());
                 } else {
-                    e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CLICK, (float) 0.2, (float) 1.9);
+                    e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.UI_BUTTON_CLICK, (float) 0.2, (float) 1.9);
                 }
             }
         }
@@ -517,7 +517,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 lsGrenade.add(Texts.GAME_RELOAD_GRENADE);
                 p.getInventory().removeItem(setName(new ItemStack(Material.EGG, 1), "§2Grenade", lsGrenade, 1));
 
-                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.CREEPER_HISS, 1, 1);
+                e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_CREEPER_PRIMED, 1, 1);
                 e.setCancelled(true);
             }
         }
@@ -590,7 +590,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 canDie.put(target.getName(), false);
                 addKill(shooter, target, "Shotgun");
                 preparePlayers(target, true);
-                target.playSound(target.getLocation(), Sound.AMBIENCE_THUNDER, 5, 1);
+                target.playSound(target.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 5, 1);
 
                 getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                     public void run() {
@@ -619,7 +619,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
                 canDie.put(target.getName(), false);
                 addKill(shooter, target, "Grenade");
                 preparePlayers(target, true);
-                target.playSound(target.getLocation(), Sound.AMBIENCE_THUNDER, 5, 1);
+                target.playSound(target.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 5, 1);
 
                 getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                     public void run() {
@@ -800,7 +800,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
 
                             if (countdown.get(i) < 6) {
                                 for (Player p : getPlayerInArena(i)) {
-                                    p.playSound(p.getLocation(), Sound.CLICK, 3, 1);
+                                    p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 3, 1);
                                 }
                             }
                             for (Player p : getPlayerInArena(i)) {
@@ -975,7 +975,7 @@ public class DoomThemAll extends JavaPlugin implements Listener {
             player.sendMessage(message);
         }
 
-        p.playSound(p.getLocation(), Sound.ORB_PICKUP, 3, 1);
+        p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 3, 1);
 
         // Check for a killstreak
         if (playerOnKillstreak.get(getPlayersArena(p)).equals(p.getDisplayName())) {
