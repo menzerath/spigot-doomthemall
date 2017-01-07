@@ -6,7 +6,7 @@
 
 	<groupId>pro.marvin.minecraft</groupId>
 	<artifactId>DoomThemAll</artifactId>
-	<version>1.1.1</version>
+	<version>1.1.2</version>
 	<packaging>jar</packaging>
 
 	<name>DoomThemAll</name>
@@ -39,6 +39,7 @@
 			<plugins>
 				<plugin>
 					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.0.2</version>
 					<configuration>
 						<archive>
 							<manifest>
@@ -50,6 +51,7 @@
 
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.6.0</version>
 					<configuration>
 						<source>1.8</source>
 						<target>1.8</target>
@@ -57,7 +59,6 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-
 		<resources>
 			<resource>
 				<directory>src/main/bukkit</directory>
