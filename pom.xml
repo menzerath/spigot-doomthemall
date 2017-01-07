@@ -2,71 +2,71 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>pro.marvin.minecraft</groupId>
-    <artifactId>DoomThemAll</artifactId>
-    <version>1.1.1</version>
-    <packaging>jar</packaging>
+	<groupId>pro.marvin.minecraft</groupId>
+	<artifactId>DoomThemAll</artifactId>
+	<version>1.1.1</version>
+	<packaging>jar</packaging>
 
-    <name>DoomThemAll</name>
-    <description>Minecraft (Bukkit/Spigot) Mini-Game: Eliminate the other team using a Shotgun and Grenades!
-    </description>
-    <url>https://github.com/MarvinMenzerath/DoomThemAll</url>
+	<name>DoomThemAll</name>
+	<description>Minecraft (Bukkit/Spigot) Mini-Game: Eliminate the other team using a Shotgun and Grenades!
+	</description>
+	<url>https://github.com/MarvinMenzerath/DoomThemAll</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-    <repositories>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-    </repositories>
+	<repositories>
+		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.11.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot-api</artifactId>
+			<version>1.11.2-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <mainClass>pro.marvin.minecraft.doomthemall.DoomThemAll</mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
-                </plugin>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifest>
+								<mainClass>pro.marvin.minecraft.doomthemall.DoomThemAll</mainClass>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
 
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
-                    <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
-        <resources>
-            <resource>
-                <directory>src/main/bukkit</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
+		<resources>
+			<resource>
+				<directory>src/main/bukkit</directory>
+				<includes>
+					<include>**/*.yml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
 </project>
