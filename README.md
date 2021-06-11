@@ -9,7 +9,7 @@ After one team reached 25 points the game is over.
 ## Setup
 Follow these steps to setup and configure "DoomThemAll" on your server:
 
-1. Download the plugin: Grab the current release from [here](https://github.com/MarvinMenzerath/DoomThemAll/releases) and put it in your plugins-folder.
+1. Download the plugin: Grab the current release from [here](https://github.com/menzerath/spigot-doomthemall/releases) and put it in your plugins-folder.
 2. Download Multiverse: Grab the current release from [here](https://dev.bukkit.org/projects/multiverse-core) and put it in your plugins-folder.
 3. Upload the maps: Upload the maps you want to play on and name them `dta-wX`, where "X" has to be a unique number. This will be the id of the arena. Example: `dta-w1`
 This can be changed in the config-file (see `gameWorldPrefix`).
